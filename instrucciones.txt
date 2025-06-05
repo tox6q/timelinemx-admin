@@ -1,0 +1,20 @@
+
+1. La priemra vez que lo uses tienes que poner este comando:
+pip install -r requirements.txt
+
+2. Abrir cmd en la localizacion de la carpeta
+
+3. correr el programa que quieras: 
+py jerseys.py
+
+4. te ACTUALIZA el archivo actual-no borra filas existentes. si no, te crea el archivo. 
+
+5. editas el .csv con excel. respeta el nombre, columnas y formatos.
+
+6. para subir el archivo al app en cmd pon "py upload.py" y selecciona lo que quieres subir. 
+Esto REMPLAZA la infomacion actual con el archivo nuevo. Hace un backup por si las dudas.
+
+- para editar el contacto abre contact-content.json con block de notas, cambia solamente lo que esta adentro de las comillas.
+- Usa el mismo formato de nombres en las fotos.
+- No cambies los nombres de los .csv
+TIP: Para abrir cmd rapido, en la carpeta le picas a donde esta la direccion y escribes cmd.

@@ -1,0 +1,39 @@
+# Environment variables (contains sensitive credentials)
+.env
+.env.local
+.env.production
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data files (CSV files contain sensitive product data)
+*.csv
+!example_*.csv  # Allow example CSV files if you want to include templates
+
+# JSON data files that might contain sensitive content
+contact-content.json
+
+# Backup files - these can contain sensitive data
+backups/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp 
