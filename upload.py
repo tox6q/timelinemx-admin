@@ -160,6 +160,27 @@ class SupabaseUploader:
             print(f"❌ Error uploading to {table_name}: {e}")
             return False
     
+    def validate_products_data(self, products: List[Dict]) -> bool:
+        """Validate that all products have a price"""
+        missing_price_rows = []
+        
+        for i, product in enumerate(products, 1):
+            price = product.get('price', '').strip() if product.get('price') else ''
+            if not price or price == '0' or price == '0.0':
+                missing_price_rows.append(i)
+        
+        if missing_price_rows:
+            print(f"❌ VALIDATION ERROR: Products missing price!")
+            print(f"   Rows with missing/zero price: {missing_price_rows[:10]}")  # Show first 10
+            if len(missing_price_rows) > 10:
+                print(f"   ... and {len(missing_price_rows) - 10} more rows")
+            print(f"   Total rows with issues: {len(missing_price_rows)}")
+            print("\n💡 Please fix the prices in your CSV file before uploading.")
+            return False
+        
+        print(f"✅ Price validation passed - all {len(products)} products have valid prices")
+        return True
+    
     def process_products_data(self, products: List[Dict]) -> List[Dict]:
         """Process products data to handle array fields and proper formatting"""
         processed = []
@@ -238,6 +259,12 @@ class SupabaseUploader:
             print(f"❌ No data to upload from {csv_file}")
             return False
         
+        # Step 2.5: Validate products data if uploading products
+        if table_name == 'products':
+            if not self.validate_products_data(data):
+                print(f"❌ Products validation failed - aborting upload")
+                return False
+        
         # Step 3: Confirm upload
         print(f"\n⚠️  This will REPLACE ALL data in {table_name} table!")
         print(f"📊 New data: {len(data)} records")
@@ -294,11 +321,10 @@ class SupabaseUploader:
             print("3. Upload Products")
             print("4. Upload FAQ")
             print("5. Upload Contact Content")
-            print("6. Upload All (Collections → Capsules → Products → FAQ)")
-            print("7. View Backup History")
-            print("8. Exit")
+            print("6. View Backup History")
+            print("7. Exit")
             
-            choice = input("\nSelect option (1-8): ").strip()
+            choice = input("\nSelect option (1-7): ").strip()
             
             if choice == '1':
                 if csv_files['collections'][1]:
@@ -331,49 +357,14 @@ class SupabaseUploader:
                     print(f"❌ {CONTACT_JSON} not found!")
             
             elif choice == '6':
-                self.upload_all_tables()
-            
-            elif choice == '7':
                 self.show_backup_history()
             
-            elif choice == '8':
+            elif choice == '7':
                 print("👋 Goodbye!")
                 break
             
             else:
-                print("❌ Invalid option. Please select 1-8.")
-    
-    def upload_all_tables(self):
-        """Upload all tables in correct order"""
-        print("\n🚀 Starting full database upload...")
-        print("⚠️  This will REPLACE ALL data in the database!")
-        
-        confirm = input("Are you sure you want to continue? (yes/no): ").lower().strip()
-        if confirm not in ['yes', 'y']:
-            print("Full upload cancelled.")
-            return
-        
-        success_count = 0
-        
-        # Upload in dependency order
-        tables = [
-            ('collections', COLLECTIONS_CSV),
-            ('capsule', CAPSULE_CSV), 
-            ('products', PRODUCTS_CSV),
-            ('faq', FAQ_CSV)
-        ]
-        
-        for table_name, csv_file in tables:
-            if os.path.exists(csv_file):
-                if self.upload_single_table(table_name, csv_file):
-                    success_count += 1
-                else:
-                    print(f"❌ Full upload stopped due to {table_name} failure")
-                    return
-            else:
-                print(f"⚠️  Skipping {table_name} - {csv_file} not found")
-        
-        print(f"\n🎉 Full upload completed! {success_count} tables updated")
+                print("❌ Invalid option. Please select 1-7.")
     
     def show_backup_history(self):
         """Show list of backup files"""

@@ -21,13 +21,6 @@ env/
 .DS_Store
 Thumbs.db
 
-# Data files (CSV files contain sensitive product data)
-*.csv
-!example_*.csv  # Allow example CSV files if you want to include templates
-
-# JSON data files that might contain sensitive content
-contact-content.json
-
 # Backup files - these can contain sensitive data
 backups/
 

@@ -1,0 +1,23 @@
+{
+  "badge": "PYTHON",
+  "title": "Speak with Our Friendly Team",
+  "subtitle": "We'd love to assist you. Fill out the form or drop us an email.",
+  "email": {
+    "title": "Email Us",
+    "description": "Our team is ready to assist.",
+    "address": "contacto.timelinemx@gmail.com",
+    "href": "mailto:contacto.timelinemx@gmail.com"
+  },
+  "instagram": {
+    "title": "Visit Us",
+    "description": "Drop by our office for a chat.",
+    "handle": "@timelinemx_",
+    "href": "https://www.instagram.com/timelinemx_/"
+  },
+  "phone": {
+    "title": "Call Us",
+    "description": "We're available Mon-Fri, 9am-5pm.",
+    "number": "+52 81 3094 5427",
+    "href": "tel:+528130945427"
+  }
+}
